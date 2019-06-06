@@ -1,0 +1,3 @@
+#/bin/bash
+
+consul --version

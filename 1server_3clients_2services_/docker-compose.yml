@@ -1,0 +1,51 @@
+version: "2"
+
+services:
+    web1:
+        container_name: web1
+        image: nginx:1.13.5
+        volumes:
+            - ./html/web1.html:/usr/share/nginx/html.html
+    web2:
+        container_name: web2
+        image: nginx:1.13.5
+        volumes:
+            - ./html/web2.html:/usr/share/nginx/html.html
+    consul-server:
+        container_name: consul-server
+        image: consul:1.5.1
+        ports:
+            - 8080:8080
+        command: agent -server -bootstrap-expect=1 -ui -http-port=8080 -client=0.0.0.0 -node consul-server
+    consul-client1:
+        container_name: consul-client1
+        image: consul:1.5.1
+        depends_on: 
+            - consul-server
+            - web1
+        links:
+            - consul-server
+            - web1
+        volumes:
+            - ./config/web1.json:/consul/config/consul.json
+        command: agent -node=consul-client1 -join=consul-server
+    consul-client2:
+        container_name: consul-client2
+        image: consul:1.5.1
+        depends_on: 
+            - consul-server
+            - web2
+        links:
+            - consul-server
+            - web2
+        volumes:
+            - ./config/web2.json:/consul/config/consul.json
+        command: agent -node=consul-client2 -join=consul-server
+    consul-client3:
+        container_name: consul-client3
+        image: consul:1.5.1
+        depends_on: 
+            - consul-server
+        links:
+            - consul-server
+        command: agent -node=consul-client3 -join=consul-server

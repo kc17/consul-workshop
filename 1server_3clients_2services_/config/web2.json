@@ -1,0 +1,12 @@
+{
+    "service": {
+        "name": "web", 
+        "address": "http://web2",
+        "port": 80,
+        "tags": ["Normal"],
+        "check": {
+          "http": "http://web2/index.html",
+          "interval": "1s"
+        }
+    }
+}

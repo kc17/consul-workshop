@@ -1,0 +1,11 @@
+{
+  "metrics":{ 
+    "metrics_collected":{
+      "statsd":{
+        "service_address":":9125",
+        "metrics_collection_interval":60,
+        "metrics_aggregation_interval":300
+      }
+    }
+  }
+}

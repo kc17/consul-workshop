@@ -1,6 +1,6 @@
 
 {
   "Name": "webapi",
-  "Address:": "http://localhost:8000",
+  "Address:": "http://localhost",
   "Port": 8000
 }

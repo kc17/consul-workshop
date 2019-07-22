@@ -1,0 +1,9 @@
+{
+  "service": {
+    "name" : "Batch",
+	  "check":{
+		"ttl": "20s",
+		"status": "passing"
+	  }
+  }
+}

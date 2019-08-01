@@ -3,9 +3,10 @@
 ## Arch
 
 Consul Server * 3
+
 Consul Client * 1
 
-Consul will not join Cluster at first. We need to use TOKEN to join Consul Cluster. So you can see in `lab99/docker-compose.yml:consul-client:command`. I used sleep to overwrite Docker endpoint (stopping Docker starts Consul automatically).
+Consul Client will not join Cluster at first. We need to use 2 TOKENs to join Consul Cluster. You can see in `lab99/docker-compose.yml:consul-client:command`. I used sleep to overwrite Docker endpoint (stopping Docker starts Consul automatically).
 
 ## Purpose
 

@@ -10,7 +10,7 @@ Consul Client will not join Cluster at first. We need to use 2 TOKENs to join Co
 
 ## Purpose
 
-### 1. Consul Servers could join with any master key
+### 1. Test if Consul Servers could become Cluster withoyt master key
 
 You can see lab99/config/server1-3.json. There is no master key assigned. Just only configure enable ACL.
 

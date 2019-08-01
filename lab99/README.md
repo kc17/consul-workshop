@@ -39,10 +39,12 @@ $ docker-compose up
 2. Login into Consul-Server1
 
 ```bash
-// when execute consul members, you got nothing, becuase you do not have permission to do it.
+$ docker exec -it consul-server1 sh
+
+// When execute consul members, you get nothing, becuase you do not have permission to do it.
 # consul members
 
-// Get master key (The SecretID)
+// Create master key (The SecretID)
 # consul acl bootstrap
 AccessorID:       0f2c6697-36e8-78ef-22be-e519eb851912
 SecretID:         d63e7ade-6647-bb82-19fc-394f67ca584a
@@ -54,7 +56,7 @@ Policies:
 
 // Export master key, then you have root permission
 # export CONSUL_HTTP_TOKEN=d63e7ade-6647-bb82-19fc-394f67ca584a
-// afeter using master key, you can check how many members in the Cluster
+// Afeter using master key, you can check how many members in the Cluster
 # consul members
 
 // Create Token policy and create Agent Token
@@ -73,7 +75,7 @@ service_prefix "" {
    policy = "read"
 }
 
-// Create Agent Token (SecretID)
+// Create Agent Token = acl.tokens.agent (SecretID)
 /consul/acl # consul acl token create -description "agent token" -policy-name "agent-TOKEN-policy"
 AccessorID:       efb8a8ad-f6b2-aa8f-79ee-b673e89ffc34
 SecretID:         4083ab09-3b2c-119e-2627-c21c98d1c81f
@@ -94,7 +96,7 @@ service_prefix "" {
     policy = "write"
 }
 
-// Create Agent Default Token (Secret ID)
+// Create Agent Default Token = acl.tokens.default (SecretID)
 /consul/acl # consul acl token create -description "agent default token" -policy-name "agent-default-policy"
 AccessorID:       d05968db-77aa-9b35-050f-176703c623ea
 SecretID:         eed040a8-3430-04c4-3fa5-e4dea4556f8c
@@ -105,7 +107,6 @@ Policies:
    8a44fbf3-a6fa-0e4c-0729-531e19dcd704 - agent-default-policy
 ```
 
-
 3. Login to Consul-Client
 
 ```bash
@@ -114,7 +115,7 @@ Policies:
 // You will get error message here, because you do not have permission to join cluster and sync data
 # consul agent --config-dir=/consul/config
 
-// change acl.tokens.agent and acl.token.default (from above commands)
+// Change acl.tokens.agent and acl.token.default (get key from above commands)
 # vi /consul/config/consul.json
 {
     "data_dir": "/consul/data",

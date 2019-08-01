@@ -1,0 +1,12 @@
+{
+    "data_dir": "/consul/data",
+    "log_level": "INFO",
+    "client_addr": "0.0.0.0",
+    "retry_join": ["consul-server1"],
+    "acl": {
+        "tokens": {
+            "agent": "8e1a9be9-60da-7339-fb18-fa76cc374fc1",
+            "default": "6fef3543-5d10-100e-406b-bea458ad4395"
+        }
+    }
+}

@@ -1,0 +1,48 @@
+version: "2"
+
+services:
+    consul-server1:
+        container_name: consul-server1
+        image: consul:1.5.1
+        ports:
+            - 8500:8500
+        volumes:
+            - ./config/server1.json:/consul/config/consul.json
+            - ./acl/agent-token-policy.hcl:/consul/acl/agent-token-policy.hcl
+            - ./acl/agent-default-policy.hcl:/consul/acl/agent-default-policy.hcl
+        command: agent -node=consul-server1 
+    consul-server2:
+        container_name: consul-server2
+        image: consul:1.5.1
+        volumes:
+            - ./config/server2.json:/consul/config/consul.json
+        depends_on: 
+            - consul-server1
+        links:
+            - consul-server1
+        command: agent -node=consul-server2 -join=consul-server1
+    consul-server3:
+        container_name: consul-server3
+        image: consul:1.5.1
+        volumes:
+            - ./config/server3.json:/consul/config/consul.json
+        depends_on: 
+            - consul-server1
+        links:
+            - consul-server1
+        command: agent -node=consul-server3 -join=consul-server1
+    consul-client:
+        container_name: consul-client
+        image: consul:1.5.1
+        volumes:
+            - ./config/client.json:/consul/config/consul.json
+            - ./config/batch.json:/consul/config/batch.json
+        depends_on: 
+            - consul-server1
+            - consul-server2
+            - consul-server3
+        links:
+            - consul-server1
+            - consul-server2
+            - consul-server3
+        command: sleep 360000

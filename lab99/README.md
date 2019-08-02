@@ -37,7 +37,7 @@ $ cd lab99
 $ docker-compose up
 ```
 
-2. Login into Consul-Server1
+2. Login to Consul-Server1
 
 ```bash
 $ docker exec -it consul-server1 sh
